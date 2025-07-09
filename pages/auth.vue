@@ -1,12 +1,14 @@
 <template>
   <div>
-    <h2>Auth page</h2>
-    <SharedButton>Simple button</SharedButton>
+    <UButtonGroup>
+      <UButton color="neutral" variant="subtle" label="Button" />
+      <UButton color="neutral" variant="outline" icon="i-lucide-chevron-down" />
+    </UButtonGroup>
+    <UButton>Button</UButton>
+    <h2 class="p-8">Auth page</h2>
   </div>
 </template>
 <script lang="ts" setup>
-import { SharedButton } from "#components";
-
 definePageMeta({ layout: "auth" });
 </script>
 <style></style>
