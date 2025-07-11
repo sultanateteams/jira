@@ -1,7 +1,7 @@
-export const tabs = [
+import type { TabsItem } from "@nuxt/ui";
+export const tabs: TabsItem[] = [
   {
     label: "Plan",
-    slot: "lan",
     description:
       "Break the big ideas down into manageable chunks across teams with user stories, issues and tasks.",
     image: "/Board.png",
@@ -13,7 +13,6 @@ export const tabs = [
   },
   {
     label: "Truck",
-    slot: "ruck",
     description:
       "Prioritize and discuss your team's work in  context while with complate visibility at every level.",
     image: "/Timeline.png",
@@ -25,7 +24,6 @@ export const tabs = [
   },
   {
     label: "Release",
-    slot: "elease",
     description:
       "Ship faster, with confidence knowing the information you have is always up-to-date",
     image: "/Releases.png",
@@ -35,64 +33,23 @@ export const tabs = [
       company: "Khwarezmshahs Empire",
     },
   },
+];
+
+export const templates = [
   {
-    label: "Release",
-    slot: "elease",
-    description:
-      "Ship faster, with confidence knowing the information you have is always up-to-date",
-    image: "/Releases.png",
-    credentails: {
-      text: "Less friction in the development process mean better result and faster time to market",
-      username: "Jaloliddin Mangburni",
-      company: "Khwarezmshahs Empire",
-    },
+    name: "Scrum",
+    image: "/scrum.svg",
   },
   {
-    label: "Release",
-    slot: "elease",
-    description:
-      "Ship faster, with confidence knowing the information you have is always up-to-date",
-    image: "/Releases.png",
-    credentails: {
-      text: "Less friction in the development process mean better result and faster time to market",
-      username: "Jaloliddin Mangburni",
-      company: "Khwarezmshahs Empire",
-    },
+    name: "Kanban",
+    image: "/kanban.svg",
   },
   {
-    label: "Release",
-    slot: "elease",
-    description:
-      "Ship faster, with confidence knowing the information you have is always up-to-date",
-    image: "/Releases.png",
-    credentails: {
-      text: "Less friction in the development process mean better result and faster time to market",
-      username: "Jaloliddin Mangburni",
-      company: "Khwarezmshahs Empire",
-    },
+    name: "Bug tracking",
+    image: "/bug.svg",
   },
   {
-    label: "Release",
-    slot: "elease",
-    description:
-      "Ship faster, with confidence knowing the information you have is always up-to-date",
-    image: "/Releases.png",
-    credentails: {
-      text: "Less friction in the development process mean better result and faster time to market",
-      username: "Jaloliddin Mangburni",
-      company: "Khwarezmshahs Empire",
-    },
-  },
-  {
-    label: "Release",
-    slot: "elease",
-    description:
-      "Ship faster, with confidence knowing the information you have is always up-to-date",
-    image: "/Releases.png",
-    credentails: {
-      text: "Less friction in the development process mean better result and faster time to market",
-      username: "Jaloliddin Mangburni",
-      company: "Khwarezmshahs Empire",
-    },
+    name: "DevOps",
+    image: "/devops.svg",
   },
 ];
