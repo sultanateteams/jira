@@ -1,14 +1,63 @@
-<template>
-  <div>
-    <UButtonGroup>
-      <UButton color="neutral" variant="subtle" label="Button" />
-      <UButton color="neutral" variant="outline" icon="i-lucide-chevron-down" />
-    </UButtonGroup>
-    <UButton>Button</UButton>
-    <h2 class="p-8">Auth page</h2>
-  </div>
-</template>
 <script lang="ts" setup>
 definePageMeta({ layout: "auth" });
+
+const isLogin = ref(true);
+
+const toggleLogin = () => (isLogin.value = !isLogin.value);
 </script>
-<style></style>
+
+<template>
+  <div
+    class="mt-[10vh] flex items-center justify-center w-full relative h-[90vh]"
+  >
+    sada
+    <NuxtImg
+      src="/bg-auth.jpg"
+      class="absolute inset-0 w-full h-full object-cover z-10"
+    />
+    adsf
+    <div
+      class="absolute inset-0 w-full h-full object-cover z-20 dark:bg-black/40 bg-white/40"
+    ></div>
+    <UCard
+      class="z-50 relative w-1/2"
+      :ui="{ body: 'flex gap-4 items-center' }"
+    >
+      <div class="space-y-4 flex-1">
+        <h1 class="text-2xl font-bold">
+          <template v-if="isLogin">Login</template>
+          <template v-else>Register</template>
+        </h1>
+        <p class="opacity-70" v-if="isLogin">
+          Place use the following credentials to login
+        </p>
+        <p class="opacity-70" v-else>
+          Place use the following credentials to register
+        </p>
+        <AuthLogin v-if="isLogin" :toggleLogin="toggleLogin" />
+        <!-- <AuthLogin /> -->
+        <!-- <AuthRegister /> -->
+        <AuthRegister v-else :toggleLogin="toggleLogin" />
+      </div>
+
+      <div
+        class="flex flex-col items-center justify-center"
+        style="height: -webkit-fill-available"
+      >
+        <div class="w-px flex-1 bg-gray-300 dark:bg-gray-600"></div>
+        <span class="my-2 text-sm text-gray-500">OR</span>
+        <div class="w-px flex-1 bg-gray-300 dark:bg-gray-600"></div>
+      </div>
+
+      <div class="space-y-4 flex-1">
+        <UButton color="neutral" block size="lg">
+          <Icon name="mdi:github" class="w-5 h-5" />
+          <span>Login with Github</span> </UButton
+        ><UButton color="neutral" block size="lg">
+          <Icon name="mdi:google" class="w-5 h-5" />
+          <span>Login with Google</span>
+        </UButton>
+      </div>
+    </UCard>
+  </div>
+</template>
