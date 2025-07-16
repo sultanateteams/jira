@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as v from "valibot";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { account, ID } from "~/utils/appwrite.js";
 
 const props = defineProps({
   toggleLogin: {
@@ -23,6 +24,8 @@ const state = reactive({
   password: "",
 });
 
+const loggedInUser = ref(null);
+
 const toast = useToast();
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   toast.add({
@@ -30,8 +33,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     description: "The form has been submitted.",
     color: "success",
   });
+
+  const { email, password, name } = event.data;
+  await account.create(ID.unique(), email, password, name);
+  login(email, password);
   console.log(event.data);
 }
+
+const login = async (email, password) => {
+  await account.createEmailPasswordSession(email, password);
+  loggedInUser.value = await account.get();
+};
 </script>
 
 <template>
