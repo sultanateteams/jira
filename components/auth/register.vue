@@ -3,12 +3,7 @@ import * as v from "valibot";
 import type { FormSubmitEvent } from "@nuxt/ui";
 import { account, ID } from "~/utils/appwrite.js";
 
-const props = defineProps({
-  toggleLogin: {
-    type: Function,
-    required: true,
-  },
-});
+const toast = useToast();
 
 const schema = v.object({
   email: v.pipe(v.string(), v.email("Invalid email")),
@@ -16,7 +11,16 @@ const schema = v.object({
   password: v.pipe(v.string(), v.minLength(8, "Must be at least 8 characters")),
 });
 
+type Email = v.InferOutput<typeof schema>["email"];
+type Password = v.InferOutput<typeof schema>["password"];
 type Schema = v.InferOutput<typeof schema>;
+
+const props = defineProps({
+  toggleLogin: {
+    type: Function,
+    required: true,
+  },
+});
 
 const state = reactive({
   name: "",
@@ -24,23 +28,33 @@ const state = reactive({
   password: "",
 });
 
-const loggedInUser = ref(null);
+const loggedInUser: any = ref(null);
+const isLoading = ref(false);
+const errorMassage: any = ref(null);
 
-const toast = useToast();
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  toast.add({
-    title: "Success",
-    description: "The form has been submitted.",
-    color: "success",
-  });
-
+  isLoading.value = true;
   const { email, password, name } = event.data;
-  await account.create(ID.unique(), email, password, name);
-  login(email, password);
-  console.log(event.data);
+  try {
+    await account.create(ID.unique(), email, password, name);
+    login(email, password);
+    props.toggleLogin();
+    console.log(event.data);
+    toast.add({
+      title: "Success",
+      description: "The form has been submitted.",
+      color: "success",
+    });
+    errorMassage.value = null;
+  } catch (error) {
+    console.log(error);
+    errorMassage.value = (error as Error).message || "Something went wrong.";
+  } finally {
+    isLoading.value = false;
+  }
 }
 
-const login = async (email, password) => {
+const login = async (email: Email, password: Password) => {
   await account.createEmailPasswordSession(email, password);
   loggedInUser.value = await account.get();
 };
@@ -48,17 +62,35 @@ const login = async (email, password) => {
 
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <UAlert
+      v-if="errorMassage"
+      title="Error!"
+      :description="errorMassage"
+      color="error"
+      variant="outline"
+    />
     <UFormField label="Name" name="name">
-      <UInput v-model="state.name" color="secondary" class="w-full" />
+      <UInput
+        v-model="state.name"
+        autocomplete="true"
+        color="secondary"
+        class="w-full"
+      />
     </UFormField>
     <UFormField label="Email" name="email">
-      <UInput v-model="state.email" color="secondary" class="w-full" />
+      <UInput
+        v-model="state.email"
+        autocomplete="true"
+        color="secondary"
+        class="w-full"
+      />
     </UFormField>
 
     <UFormField label="Password" name="password">
       <UInput
         v-model="state.password"
         type="password"
+        autocomplete="true"
         color="secondary"
         class="w-full"
       />
@@ -67,6 +99,7 @@ const login = async (email, password) => {
     <div class="text-sm text-neutral-500">
       Already exist account?
       <button
+        :disabled="isLoading"
         type="button"
         class="text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-300 rounded cursor-pointer"
         @click="props.toggleLogin"
@@ -75,6 +108,16 @@ const login = async (email, password) => {
       </button>
     </div>
 
-    <UButton type="submit" color="secondary" class="px-10"> Submit </UButton>
+    <UButton
+      type="submit"
+      color="secondary"
+      class="px-10"
+      :disabled="isLoading"
+    >
+      <template v-if="!isLoading"> Submit </template>
+      <template v-else>
+        <Icon name="eos-icons:three-dots-loading" />
+      </template>
+    </UButton>
   </UForm>
 </template>

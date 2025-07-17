@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { tabs, templates } from "~/constants";
+import { storeToRefs } from "pinia";
 
+const authStore = useAuthStore();
+
+const { currentUser } = storeToRefs(authStore);
 useHead({ title: "Smart Office" });
 </script>
 <template>
@@ -16,7 +20,14 @@ useHead({ title: "Smart Office" });
         <p class="text-lg opacity-80">
           The #1 software development tool used by agule teams
         </p>
-        <UButton>Try it free</UButton>
+        <template v-if="currentUser.status">
+          <NuxtLink to="/documents">
+            <UButton color="secondary">Documents</UButton>
+          </NuxtLink>
+        </template>
+        <template v-else>
+          <UButton>Try it free</UButton>
+        </template>
       </div>
       <NuxtImg src="./hero.webp" />
     </section>
@@ -127,10 +138,10 @@ useHead({ title: "Smart Office" });
             Placeat quae voluptatibus consequuntur.
           </h1>
           <p class="text-xl text-center mb-8">
-            Repellendus
-            quis cumque molestiae dignissimos ratione dolore ab, asperiores non
+            Repellendus quis cumque molestiae dignissimos ratione dolore ab,
+            asperiores non
           </p>
-          <NuxtImg src="/product.webp"/>
+          <NuxtImg src="/product.webp" />
         </div>
       </div>
     </section>
