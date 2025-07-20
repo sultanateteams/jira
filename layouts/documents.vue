@@ -25,9 +25,14 @@ onMounted(async () => {
 </script> -->
 
 <template>
-  <UApp>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </UApp>
+  <main>
+    <LayoutsNavbar />
+    <LayoutsSidebar />
+  </main>
+  <section class="min-h-screen bg-white dark:bg-black pl-72 pt-[10vh]">
+    <div class="p-4">
+      <slot />
+    </div>
+  </section>
 </template>
+<style></style>

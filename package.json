@@ -19,6 +19,7 @@
     "@nuxt/test-utils": "^3.19.2",
     "@nuxt/ui": "^3.2.0",
     "@pinia/nuxt": "^0.11.1",
+    "@tanstack/vue-query": "^5.83.0",
     "@unhead/vue": "^2.0.12",
     "appwrite": "^18.1.1",
     "better-sqlite3": "^12.2.0",

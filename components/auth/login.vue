@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as v from "valibot";
 import type { FormSubmitEvent } from "@nuxt/ui";
-import { account, ID } from "~/utils/appwrite.js";
+import { account} from "~/utils/appwrite.js";
 
 const toast = useToast();
 const authStore = useAuthStore();

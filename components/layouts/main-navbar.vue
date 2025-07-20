@@ -61,7 +61,7 @@ const onConfirm = async () => {
             <UButton color="primary" variant="outline">Documents</UButton>
           </NuxtLink>
           <UModal
-            v-model:open="isOpen"
+            v-model="isOpen"
             title="Chiqish!"
             close-icon="i-lucide-x"
             cancel="yo'q"

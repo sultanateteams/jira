@@ -1,4 +1,10 @@
 import type { TabsItem } from "@nuxt/ui";
+import { EnumStatus } from "~/types";
+
+export const DB_ID = "jira-db";
+export const COLLECTION_DEALS = "687a67410036b393398d"
+export const COLLECTION_COMMMENTS = "comments"
+
 export const tabs: TabsItem[] = [
   {
     label: "Plan",
@@ -51,5 +57,56 @@ export const templates = [
   {
     name: "DevOps",
     image: "/devops.svg",
+  },
+];
+
+export const sidebarItems = [
+  {
+    name: "Dashboard",
+    url: "/documents",
+    icon: "radix-icons:dashboard",
+  },
+  {
+    name: "To do",
+    url: "/documents/to-do",
+    icon: "ri:todo-fill",
+  },
+  {
+    name: "In progress",
+    url: "/documents/in-progress",
+    icon: "game-icons:progression",
+  },
+  {
+    name: "Produced",
+    url: "/documents/produced",
+    icon: "eos-icons:product-subscriptions",
+  },
+  {
+    name: "Done",
+    url: "/documents/done",
+    icon: "ic:baseline-cloud-done",
+  },
+];
+
+export const status = [
+  {
+    id: EnumStatus.todo,
+    name: "To do",
+    items: [],
+  },
+  {
+    id: EnumStatus["in-progress"],
+    name: "In progress",
+    items: [],
+  },
+  {
+    id: EnumStatus.produced,
+    name: "Produced",
+    items: [],
+  },
+  {
+    id: EnumStatus.done,
+    name: "Done",
+    items: [],
   },
 ];
