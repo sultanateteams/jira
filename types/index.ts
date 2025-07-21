@@ -21,7 +21,7 @@ export interface IDeal {
   comments: IComment[];
 }
 
-export interface IComumn {
+export interface IColumn {
   id: EnumStatus;
   name: string;
   items: IDeal;

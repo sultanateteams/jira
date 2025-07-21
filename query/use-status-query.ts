@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/vue-query";
 import { Query } from "appwrite";
 import { COLLECTION_DEALS, DB_ID, status } from "~/constants";
-import type { IComumn, IDeal } from "~/types";
+import type { IColumn, IDeal } from "~/types";
 import { DATABASE } from "~/utils/appwrite";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "~/store/auth.store";
@@ -19,7 +19,7 @@ export const useStatusQuery = () => {
         Query.equal("userId", userId.value),
       ]),
     select: (data: any) => {
-      const newBoard: IComumn[] = status.map((item) => ({
+      const newBoard: IColumn[] = status.map((item) => ({
         ...item,
         items: [],
       }));

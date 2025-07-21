@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { card } from "#build/ui";
+import { useMutation } from "@tanstack/vue-query";
+import { COLLECTION_DEALS, DB_ID } from "~/constants";
 import { useStatusQuery } from "~/query/use-status-query";
+import type { IColumn, IDeal } from "~/types";
 import { account } from "~/utils/appwrite.js";
+
+useHead({ title: "Documents | Smart office" });
+definePageMeta({ layout: "documents" });
 
 const loadingStore = useLoadingStore();
 const router = useRouter();
 const authStore = useAuthStore();
+const { data, isLoading, refetch } = useStatusQuery();
 
-useHead({ title: "Documents | Smart office" });
-definePageMeta({ layout: "documents" });
+const dragCardRef = ref<IDeal | null>(null);
+const sourceColumnRef = ref<IColumn | null>(null);
+const isMoving = ref(false);
 
 onMounted(async () => {
   await account
@@ -29,7 +37,30 @@ onMounted(async () => {
     });
 });
 
-const { data, isLoading, refetch } = useStatusQuery();
+const { mutate, isPending } = useMutation({
+  mutationKey: ["moveCard"],
+  mutationFn: ({ docId, status }: { docId: string; status: string }) =>
+    DATABASE.updateDocument(DB_ID, COLLECTION_DEALS, docId, { status }),
+  onSuccess: () => refetch(),
+});
+
+const handleStart = (card: IDeal, column: IColumn) => {
+  isMoving.value = true;
+  dragCardRef.value = card;
+  sourceColumnRef.value = column;
+};
+
+const handleDragOver = (event: DragEvent) => {
+  event.preventDefault();
+};
+
+const handleDrop = (column: IColumn) => {
+  console.log("drop", dragCardRef.value, sourceColumnRef.value);
+  isMoving.value = false;
+  if (dragCardRef.value && sourceColumnRef.value) {
+    mutate({ docId: dragCardRef.value.$id, status: column.id });
+  }
+};
 </script>
 
 <template>
@@ -50,7 +81,13 @@ const { data, isLoading, refetch } = useStatusQuery();
       <USkeleton class="h-4 w-full" />
       <USkeleton class="h-4 w-[200px]" />
     </div>
-    <div v-else v-for="item in data" :key="item.id">
+    <div
+      v-else
+      v-for="item in data"
+      :key="item.id"
+      @dragover="handleDragOver"
+      @drop="() => handleDrop(item)"
+    >
       <UButton class="w-full h-12" color="secondary" variant="outline">
         <div class="flex items-center space-x-2">
           <span class="font-bold">{{ item.name }}</span>
@@ -65,6 +102,7 @@ const { data, isLoading, refetch } = useStatusQuery();
         class="my-3 dark:bg-gray-900 bg-gray-300 rounded-md p-2 animation"
         role="button"
         draggable="true"
+        @dragstart="() => handleStart(element, item)"
       >
         <div class="flex items-center space-x-2">
           {{ element.name }}
