@@ -29,9 +29,7 @@ onMounted(async () => {
     });
 });
 
-const { data, isLoading } = useStatusQuery();
-
-console.log("data:  ", data);
+const { data, isLoading, refetch } = useStatusQuery();
 </script>
 
 <template>
@@ -59,12 +57,12 @@ console.log("data:  ", data);
           <span class="text-sm text-neutral-500">{{ item.items.length }}</span>
         </div>
       </UButton>
-      <SharedCreateDeal v-if="item.items.length == 0" />
+      <SharedCreateDeal v-if="item.items.length == 0" :refetch="refetch" />
       <div
         v-else
         v-for="element in item.items"
         :key="element.$id"
-        class="my-3 bg-gray-900 rounded-md p-2"
+        class="my-3 dark:bg-gray-900 bg-gray-300 rounded-md p-2 animation"
         role="button"
         draggable="true"
       >
@@ -90,4 +88,19 @@ console.log("data:  ", data);
   </div>
 </template>
 
-<style></style>
+<style scoped>
+@keyframes show {
+  from {
+    transform: scale(0.5) translateY(-30px);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1), translateY(0);
+    opacity: 1;
+  }
+}
+
+.animation {
+  animation: show 0.3s ease-in-out;
+}
+</style>

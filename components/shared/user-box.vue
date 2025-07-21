@@ -39,7 +39,7 @@ const onConfirm = async () => {
     </UButton>
 
     <template #content>
-      <Placeholder class="p-2 w-72 m-4 inline-flex">
+      <div class="p-2 w-72 m-4 inline-flex">
         <div class="space-y-0">
           <p class="text-neutral-600 text-sm">
             {{ authStore.currentUser.email }}
@@ -86,7 +86,7 @@ const onConfirm = async () => {
             </UModal>
           </div>
         </div>
-      </Placeholder>
+      </div>
     </template>
   </UPopover>
 </template>

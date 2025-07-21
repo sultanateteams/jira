@@ -1,8 +1,7 @@
-<!-- <script lang="ts" setup>
-
-const router = useRouter()
-const authStore = useAuthStore()
-const loadingStore = useLoadingStore()
+<script lang="ts" setup>
+const router = useRouter();
+const authStore = useAuthStore();
+const loadingStore = useLoadingStore();
 
 onMounted(async () => {
   await account
@@ -22,10 +21,11 @@ onMounted(async () => {
       loadingStore.set(false);
     });
 });
-</script> -->
+</script>
 
 <template>
-  <main>
+  <UiLoader v-if="loadingStore.isLoading" />
+  <main v-else>
     <LayoutsNavbar />
     <LayoutsSidebar />
   </main>

@@ -26,3 +26,10 @@ export interface IComumn {
   name: string;
   items: IDeal;
 }
+
+export interface ICreateDeals {
+  name: string;
+  description: string;
+  status: EnumStatus;
+  userId: string;
+}
