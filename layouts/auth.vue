@@ -3,7 +3,8 @@
 <template>
   <section>
     <LayoutsMainNavbar />
-    <slot />
+    <!-- <slot /> -->
+     <NuxtPage />
   </section>
 </template>
 <style></style>

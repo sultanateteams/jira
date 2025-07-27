@@ -51,9 +51,13 @@ const onConfirm = async () => {
       class="container h-full mx-auto flex items-center justify-between pt-2"
     >
       <NuxtLink to="/" class="flex space-x-1 items-center">
+        <NuxtImg src="./ABS.svg" hight="75" width="75"/>
+        <span class="text-2xl font-medium">Software</span>
+      </NuxtLink>
+      <!-- <NuxtLink to="/" class="flex space-x-1 items-center">
         <NuxtImg src="./logo.svg" hight="50" width="50" />
         <span class="text-2xl font-medium">ABS Software</span>
-      </NuxtLink>
+      </NuxtLink> -->
       <div class="flex items-center space-x-2">
         <SharedColorMode />
         <template v-if="currentUser.status">
@@ -61,7 +65,7 @@ const onConfirm = async () => {
             <UButton color="primary" variant="outline">Documents</UButton>
           </NuxtLink>
           <UModal
-            v-model="isOpen"
+            v-model:open="isOpen"
             title="Chiqish!"
             close-icon="i-lucide-x"
             cancel="yo'q"

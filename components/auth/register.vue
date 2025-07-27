@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as v from "valibot";
 import type { FormSubmitEvent } from "@nuxt/ui";
-import { account, ID } from "~/utils/appwrite.js";
+import { account, UNIQUE_ID } from "~/utils/appwrite.js";
 
 const toast = useToast();
 
@@ -36,7 +36,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   isLoading.value = true;
   const { email, password, name } = event.data;
   try {
-    await account.create(ID.unique(), email, password, name);
+    await account.create(UNIQUE_ID, email, password, name);
     login(email, password);
     props.toggleLogin();
     console.log(event.data);

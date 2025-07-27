@@ -5,7 +5,16 @@ import { storeToRefs } from "pinia";
 const authStore = useAuthStore();
 
 const { currentUser } = storeToRefs(authStore);
-useHead({ title: "Smart Office" });
+useHead({
+  title: "Smart Office",
+  link: [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: "/ABSE.svg",
+    },
+  ],
+});
 </script>
 <template>
   <main class="pb-72">

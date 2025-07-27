@@ -6,13 +6,23 @@ import { useStatusQuery } from "~/query/use-status-query";
 import type { IColumn, IDeal } from "~/types";
 import { account } from "~/utils/appwrite.js";
 
-useHead({ title: "Documents | Smart office" });
+useHead({
+  title: "Documents | Smart office",
+  link: [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: "/ABSE.svg",
+    },
+  ],
+});
 definePageMeta({ layout: "documents" });
 
 const loadingStore = useLoadingStore();
 const router = useRouter();
 const authStore = useAuthStore();
 const { data, isLoading, refetch } = useStatusQuery();
+const { set } = useCurrentDealStore();
 
 const dragCardRef = ref<IDeal | null>(null);
 const sourceColumnRef = ref<IColumn | null>(null);
@@ -87,6 +97,11 @@ const handleDrop = (column: IColumn) => {
       :key="item.id"
       @dragover="handleDragOver"
       @drop="() => handleDrop(item)"
+      class="px-1"
+      :class="
+        isMoving &&
+        'border-l-2 border-r-2 border-dotted h-screen  border-gray-500'
+      "
     >
       <UButton class="w-full h-12" color="secondary" variant="outline">
         <div class="flex items-center space-x-2">
@@ -103,6 +118,7 @@ const handleDrop = (column: IColumn) => {
         role="button"
         draggable="true"
         @dragstart="() => handleStart(element, item)"
+        :class="isPending && 'opacity-50 cursor-not-allowed'"
       >
         <div class="flex items-center space-x-2">
           {{ element.name }}
@@ -115,14 +131,22 @@ const handleDrop = (column: IColumn) => {
           class="group flex hover:underline cursor-pointer items-center"
           role="button"
         >
-          <span>More details...</span>
-          <Icon
-            name="material-symbols:arrow-right-alt-rounded"
-            class="group-hover:translate-x-3 transition"
-          />
+          <UButton
+            color="secondary"
+            class="w-full mt-3 group"
+            variant="ghost"
+            @click="set(element)"
+          >
+            <span>More details...</span>
+            <Icon
+              name="material-symbols:arrow-right-alt-rounded"
+              class="group-hover:translate-x-3 transition"
+            />
+          </UButton>
         </div>
       </div>
     </div>
+    <Slideover />
   </div>
 </template>
 

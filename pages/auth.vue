@@ -2,7 +2,16 @@
 import { account } from "~/utils/appwrite.js";
 
 definePageMeta({ layout: "auth" });
-useHead({ title: "Auth | Jira" });
+useHead({
+  title: "Auth | Jira",
+  link: [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: "/ABSE.svg",
+    },
+  ],
+});
 
 const router = useRouter();
 const loadingStore = useLoadingStore();

@@ -31,7 +31,8 @@ onMounted(async () => {
   </main>
   <section class="min-h-screen bg-white dark:bg-black pl-72 pt-[10vh]">
     <div class="p-4">
-      <slot />
+      <!-- <slot /> -->
+      <NuxtPage />
     </div>
   </section>
 </template>
