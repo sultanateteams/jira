@@ -3,7 +3,7 @@ import { card } from "#build/ui";
 import { useMutation } from "@tanstack/vue-query";
 import { COLLECTION_DEALS, DB_ID } from "~/constants";
 import { useStatus } from "~/query/use-status";
-import type { IColumn, IDeal } from "~/types";
+import { EnumStatus, type IColumn, type IDeal } from "~/types";
 import { account } from "~/utils/appwrite.js";
 
 useHead({
@@ -22,6 +22,7 @@ const loadingStore = useLoadingStore();
 const router = useRouter();
 const authStore = useAuthStore();
 const { data, isLoading, refetch } = useStatus();
+console.log(data);
 const { set } = useCurrentDealStore();
 
 const dragCardRef = ref<IDeal | null>(null);
@@ -109,7 +110,11 @@ const handleDrop = (column: IColumn) => {
           <span class="text-sm text-neutral-500">{{ item.items.length }}</span>
         </div>
       </UButton>
-      <SharedCreateDeal v-if="item.items.length == 0" :refetch="refetch" />
+      <SharedCreateDeal
+        v-if="item.items.length == 0"
+        :refetch="refetch"
+        :enumTyp="EnumStatus.done"
+      />
       <div
         v-else
         v-for="element in item.items"

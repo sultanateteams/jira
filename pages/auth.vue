@@ -33,6 +33,12 @@ onMounted(() => {
       console.log(loadingStore.isLoading);
     });
 });
+
+const onGoogle = () =>
+  account.createOAuth2Session("google", "http://localhost:3000/");
+
+const onGitHub = () =>
+  account.createOAuth2Session("github", "http://localhost:3000/");
 </script>
 <template>
   <UiLoader v-if="loadingStore.isLoading" />
@@ -78,10 +84,10 @@ onMounted(() => {
         </div>
 
         <div class="space-y-4 flex-1">
-          <UButton color="neutral" block size="lg">
+          <UButton color="neutral" block size="lg" @click="onGitHub">
             <Icon name="mdi:github" class="w-5 h-5" />
             <span>Login with Github</span> </UButton
-          ><UButton color="neutral" block size="lg">
+          ><UButton color="neutral" block size="lg" @click="onGoogle">
             <Icon name="mdi:google" class="w-5 h-5" />
             <span>Login with Google</span>
           </UButton>

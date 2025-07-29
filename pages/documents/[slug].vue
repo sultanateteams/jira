@@ -78,8 +78,8 @@ const handleDelete = (id: string) => {
 
 <template>
   <div class="flex items-center justify-center">
-    <h1 class="text-4xl font-bold">{{slug.title}}</h1>
-    <SharedCreateDeal :status="slug.status" :refetch="refetch" />
+    <h1 class="text-4xl font-bold">{{ slug.title }}</h1>
+    <SharedCreateDeal :enumTyp="slug.status" :refetch="refetch" />
   </div>
   <hr />
   <div class="grid grid-cols-4 gap-2" v-if="isLoading">
@@ -128,6 +128,11 @@ const handleDelete = (id: string) => {
         </div>
         <Slideover />
         <SharedEditDeal :refetch="refetch" />
+      </div>
+    </div>
+    <div v-else>
+      <div class="flex flex-col items-center justify-center mt-5">
+        <NuxtImg src="/no-data.svg" />
       </div>
     </div>
   </div>

@@ -34,9 +34,6 @@ const onConfirm = async () => {
         description: (error as Error).message || "Something went wrong.",
         color: "error",
       });
-    })
-    .finally(() => {
-      console.log("authStore.user:  ", authStore.user);
     });
   isOpen.value = false;
   loadingStore.set(false);
@@ -51,13 +48,9 @@ const onConfirm = async () => {
       class="container h-full mx-auto flex items-center justify-between pt-2"
     >
       <NuxtLink to="/" class="flex space-x-1 items-center">
-        <NuxtImg src="./ABS.svg" hight="75" width="75"/>
+        <NuxtImg src="./ABS.svg" hight="75" width="75" />
         <span class="text-2xl font-medium">Software</span>
       </NuxtLink>
-      <!-- <NuxtLink to="/" class="flex space-x-1 items-center">
-        <NuxtImg src="./logo.svg" hight="50" width="50" />
-        <span class="text-2xl font-medium">ABS Software</span>
-      </NuxtLink> -->
       <div class="flex items-center space-x-2">
         <SharedColorMode />
         <template v-if="currentUser.status">
@@ -87,6 +80,7 @@ const onConfirm = async () => {
             </template>
           </UModal>
         </template>
+
         <template v-else>
           <NuxtLink to="/auth">
             <UButton color="info">Get it Free</UButton>
@@ -95,6 +89,7 @@ const onConfirm = async () => {
             <UButton color="info" variant="soft">Sign in</UButton>
           </NuxtLink>
         </template>
+        <SharedUserBox v-if="currentUser.status" />
       </div>
     </div>
   </div>

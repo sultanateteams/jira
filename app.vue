@@ -1,29 +1,3 @@
-<!-- <script lang="ts" setup>
-
-const router = useRouter()
-const authStore = useAuthStore()
-const loadingStore = useLoadingStore()
-
-onMounted(async () => {
-  await account
-    .get()
-    .then((response) => {
-      authStore.set({
-        email: response.email,
-        id: response.$id,
-        name: response.name,
-        status: response.status,
-      });
-    })
-    .catch(() => {
-      router.push("/");
-    })
-    .finally(() => {
-      loadingStore.set(false);
-    });
-});
-</script> -->
-
 <template>
   <UApp>
     <NuxtLayout>

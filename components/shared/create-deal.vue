@@ -27,6 +27,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  enumTyp: {
+    type: String as PropType<EnumStatus>,
+    required: false,
+  },
 });
 
 const validate = (state: any): FormError[] => {
@@ -69,7 +73,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   mutate({
     name,
     description,
-    status: EnumStatus.todo,
+    status: props.enumTyp || EnumStatus.todo,
     userId: authStore.currentUser.id,
   });
 }
