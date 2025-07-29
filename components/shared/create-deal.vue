@@ -6,6 +6,7 @@ import type { FormError } from "@nuxt/ui";
 import { useMutation } from "@tanstack/vue-query";
 import { COLLECTION_DEALS, DB_ID } from "~/constants";
 import { EnumStatus, type ICreateDeals } from "~/types";
+import { ID } from "appwrite";
 
 type Schema = v.InferOutput<typeof schema>;
 const schema = v.object({
@@ -44,7 +45,7 @@ const validate = (state: any): FormError[] => {
 const { isPending, mutate } = useMutation({
   mutationKey: ["create-deal"],
   mutationFn: (data: ICreateDeals) =>
-    DATABASE.createDocument(DB_ID, COLLECTION_DEALS, UNIQUE_ID, data),
+    DATABASE.createDocument(DB_ID, COLLECTION_DEALS, ID.unique(), data),
   onSuccess: () => {
     props.refetch();
     state.name = undefined;

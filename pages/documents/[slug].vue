@@ -3,8 +3,55 @@ import { useDeals } from "~/query/use-deals";
 import { useDelete } from "~/query/use-delete";
 import { EnumStatus } from "~/types";
 
+const route = useRoute();
+
+const slugs = [
+  {
+    slug: "to-do",
+    title: "To-Do",
+    enum: EnumStatus.todo,
+    status: "to-do",
+  },
+  {
+    slug: "in-progress",
+    title: "In-progress",
+    enum: EnumStatus["in-progress"],
+    status: "in-progress",
+  },
+  {
+    slug: "produced",
+    title: "Produced",
+    enum: EnumStatus.produced,
+    status: "produced",
+  },
+  {
+    slug: "done",
+    title: "Done",
+    enum: EnumStatus.done,
+    status: "done",
+  },
+];
+
+const slug = reactive({
+  slug: "to-do",
+  title: "To-Do",
+  enum: EnumStatus.todo,
+  status: "to-do",
+});
+
+watch(
+  () => route.params.slug,
+  (newSlug) => {
+    const found = slugs.find((el) => el.slug === newSlug);
+    if (found) {
+      Object.assign(slug, found);
+    }
+  },
+  { immediate: true }
+);
+
 useHead({
-  title: "To-do | Smart office",
+  title: slug.title + " | Smart office",
   link: [
     {
       rel: "icon",
@@ -13,10 +60,12 @@ useHead({
     },
   ],
 });
+
 definePageMeta({ layout: "documents" });
-const { data, isLoading, refetch } = useDeals(EnumStatus.todo);
+
+const { data, isLoading, refetch } = useDeals(slug.enum);
 const { set } = useCurrentDealStore();
-const { isDeleting, deleteDeal } = useDelete(refetch);
+const { deleteDeal } = useDelete(refetch);
 const editDeal = useEditDealStore();
 
 const handleDelete = (id: string) => {
@@ -29,8 +78,8 @@ const handleDelete = (id: string) => {
 
 <template>
   <div class="flex items-center justify-center">
-    <h1 class="text-4xl font-bold">To Do</h1>
-    <SharedCreateDeal status="to-do" :refetch="refetch" />
+    <h1 class="text-4xl font-bold">{{slug.title}}</h1>
+    <SharedCreateDeal :status="slug.status" :refetch="refetch" />
   </div>
   <hr />
   <div class="grid grid-cols-4 gap-2" v-if="isLoading">
