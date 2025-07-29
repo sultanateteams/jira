@@ -48,7 +48,7 @@ const toggleDescription = () => {
           </template>
           <template v-else>
             <div
-              class="bg-gradient-to-b from-transparent to-gray-800 inset-0 absolute"
+              class="bg-gradient-to-b from-transparent dark:to-gray-800 to-gray-200 inset-0 absolute"
             ></div>
             {{ store.deal?.description.slice(0, 200) }} ...
             <div

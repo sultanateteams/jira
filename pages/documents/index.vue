@@ -2,7 +2,7 @@
 import { card } from "#build/ui";
 import { useMutation } from "@tanstack/vue-query";
 import { COLLECTION_DEALS, DB_ID } from "~/constants";
-import { useStatusQuery } from "~/query/use-status-query";
+import { useStatus } from "~/query/use-status";
 import type { IColumn, IDeal } from "~/types";
 import { account } from "~/utils/appwrite.js";
 
@@ -21,7 +21,7 @@ definePageMeta({ layout: "documents" });
 const loadingStore = useLoadingStore();
 const router = useRouter();
 const authStore = useAuthStore();
-const { data, isLoading, refetch } = useStatusQuery();
+const { data, isLoading, refetch } = useStatus();
 const { set } = useCurrentDealStore();
 
 const dragCardRef = ref<IDeal | null>(null);
@@ -116,6 +116,7 @@ const handleDrop = (column: IColumn) => {
         :key="element.$id"
         class="my-3 dark:bg-gray-900 bg-gray-300 rounded-md p-2 animation"
         role="button"
+        @click="set(element)"
         draggable="true"
         @dragstart="() => handleStart(element, item)"
         :class="isPending && 'opacity-50 cursor-not-allowed'"
@@ -126,23 +127,6 @@ const handleDrop = (column: IColumn) => {
         <hr class="my-3" />
         <div class="opacity-55 text-sm line-clamp-1">
           {{ element.description }}
-        </div>
-        <div
-          class="group flex hover:underline cursor-pointer items-center"
-          role="button"
-        >
-          <UButton
-            color="secondary"
-            class="w-full mt-3 group"
-            variant="ghost"
-            @click="set(element)"
-          >
-            <span>More details...</span>
-            <Icon
-              name="material-symbols:arrow-right-alt-rounded"
-              class="group-hover:translate-x-3 transition"
-            />
-          </UButton>
         </div>
       </div>
     </div>

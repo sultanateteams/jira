@@ -6,7 +6,7 @@ import { DATABASE } from "~/utils/appwrite";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "~/store/auth.store";
 
-export const useStatusQuery = () => {
+export const useStatus = () => {
   const authStore = useAuthStore();
 
   const userId = computed(() => authStore.currentUser.id); // ✅ Bu yerda .value yo‘q
